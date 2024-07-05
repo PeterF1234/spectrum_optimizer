@@ -1,0 +1,10 @@
+name: stats2
+dependencies:
+  - numpy
+  - scipy
+  - matplotlib
+  - seaborn
+  - pandas
+  - jupyter
+  - wordcloud
+
