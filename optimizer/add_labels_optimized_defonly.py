@@ -59,7 +59,7 @@ def build_filedata(files,outfile,dumpfile,header,workdir='.'):
     functionals = ["DSD-BLYP","_B2PLYP","wB2PLYP","STEOM-DLPNO-CCSD",
                    "_B3LYP-D3","CAM-B3LYP-D3","_M06_","M062X","_M06L",
                    "_PBE-D3","PBE0","_wB97XD","TPSS","B97D3","TDHF",
-                   "B2GPPLYP","SCS-PBE-QIDH","wPBEPP86",
+                   "B2GPPLYP","SCS-PBE-QIDH","_wPBEPP86","SOS-wPBEPP86",
                    "SOC-B3LYP","SOC-PBE","SOC-M06L","SOC-M06_","SOC-wB97XD"]
     basis = ["_def2TZVP","_TZVP","_def2SVP","_DEF2-TZVP"]
     # Build the database
@@ -79,13 +79,16 @@ def build_filedata(files,outfile,dumpfile,header,workdir='.'):
         except KeyError:
             print("Warning: molecule identification was not found in " + i)
         for f in functionals:
-            if f in i:
-                if f == "_wB97XD": # change to proper functional name
-                    G[i].append("$\\omega$-B97XD")
-                elif f == "SOC-wB97XD": # change to proper functional name
-                    G[i].append("SOC-$\\omega$-B97XD")
-                elif f == "wB2PLYP": # change to proper functional name
-                    G[i].append("$\\omega$-B2PLYP")
+            if f in i: # change to proper functional name
+                if f == "_wB97XD":
+                    G[i].append("ωB97X-D")
+                    # G[i].append("$\\omega$B97X-D")
+                elif f == "SOC-wB97XD":
+                    G[i].append("SOC-ωB97X-D")
+                    # G[i].append("SOC-$\\omega$B97X-D")
+                elif f == "wB2PLYP":
+                    G[i].append("ωB2PLYP")
+                    # G[i].append("$\\omega$B2PLYP")
                 elif f == "_B2PLYP": # avoid conflict with wB2PLYP
                     G[i].append("B2PLYP")
                 elif f == "_B3LYP-D3": # avoid conflict with CAM-B3LYP
@@ -95,13 +98,21 @@ def build_filedata(files,outfile,dumpfile,header,workdir='.'):
                 elif f == "SOC-M06_": # avoid conflict with SOC-M06L
                     G[i].append("SOC-M06")
                 elif f == "_M06L": # avoid conflict with SOC-M06L
-                    G[i].append("M06L")
+                    G[i].append("M06-L")
+                elif f == "M062X":
+                    G[i].append("M06-2X")
                 elif f == "_PBE-D3": # avoid conflict with SOC-PBE
                     G[i].append("PBE-D3")
+                elif f == "B97D3":
+                    G[i].append("B97-D3")
                 elif f == "B2GPPLYP":
                     G[i].append("B2GP-PLYP")
-                elif f == "wPBEPP86":
-                    G[i].append("$\\omega$-PBEPP86")
+                elif f == "_wPBEPP86":
+                    G[i].append("ωPBEPP86")
+                    # G[i].append("$\\omega$PBEPP86")
+                elif f == "SOS-wPBEPP86":
+                    G[i].append("SOS-ωPBEPP86")
+                    # G[i].append("SOS-$\\omega$PBEPP86")
                 else:
                     G[i].append(f)
         if len(G[i]) != 2:
